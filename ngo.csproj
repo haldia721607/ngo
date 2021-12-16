@@ -256,6 +256,7 @@
     <Content Include="Views\Home\EventDetail.cshtml" />
     <Content Include="Views\Home\Blog.cshtml" />
     <Content Include="Views\Home\Events.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

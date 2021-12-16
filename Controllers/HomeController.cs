@@ -36,5 +36,26 @@ namespace ngo.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Authentic()
+        {
+            if (Request.Form["Email"].ToString()=="" && Request.Form["Email"].ToString() == "")
+            {
+                Session["UserName"] = "Ravi Shanker Pandey";
+                Session["UserId"] = 1;
+                Session["UserType"] = "Admin";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Msg = "Check Email Id And Password";
+                return View("~/Views/Home/Login.cshtml");
+            }
+        }
     }
 }
