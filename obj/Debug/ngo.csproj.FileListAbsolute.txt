@@ -72,7 +72,6 @@ D:\rohit\ngo\bin\System.Web.WebPages.Razor.xml
 D:\rohit\ngo\bin\Newtonsoft.Json.xml
 D:\rohit\ngo\bin\Antlr3.Runtime.pdb
 D:\rohit\ngo\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\rohit\ngo\obj\Debug\ngo.csprojAssemblyReference.cache
 D:\rohit\ngo\obj\Debug\ngo.csproj.CoreCompileInputs.cache
 D:\rohit\ngo\obj\Debug\ngo.csproj.CopyComplete
 D:\rohit\ngo\obj\Debug\ngo.dll
