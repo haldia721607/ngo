@@ -35,13 +35,36 @@ namespace ngo.Controllers
         {
             return View();
         }
-        public ActionResult EventDetail()
+        public ActionResult EventDetail(int EventId)
         {
-            return View();
+            DataSet ds = new DataSet();
+            try
+            {
+                List<SqlParameter> SqlParameters = new List<SqlParameter>();
+                SqlParameters.Add(new SqlParameter("@EventId", EventId));
+                SqlParameters.Add(new SqlParameter("@QueryType", "getEventById"));
+                ds = DBManager.ExecuteDataSetWithParamiter("usp_EventMaster", CommandType.StoredProcedure, SqlParameters);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Msg = "some error occurred, please try again..!";
+            }
+            return View(ds);
         }
         public ActionResult Events()
         {
-            return View();
+            DataSet ds = new DataSet();
+            try
+            {
+                List<SqlParameter> SqlParameters = new List<SqlParameter>();
+                SqlParameters.Add(new SqlParameter("@QueryType", "getActiveEvents"));
+                ds = DBManager.ExecuteDataSetWithParamiter("usp_EventMaster", CommandType.StoredProcedure, SqlParameters);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Msg = "some error occurred, please try again..!";
+            }
+            return View(ds);
         }
         public ActionResult Blog()
         {

@@ -1,5 +1,11 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@using System.Data;
+@model DataSet
+@{
+    ViewBag.Title = "Event Detail";
+    var events = (Model != null && Model.Tables.Count > 0) ? Model.Tables[0] : null;
+    var imageUrl = (Model != null && Model.Tables.Count > 0) ? Model.Tables[1] : null;
+    var videoUrl = (Model != null && Model.Tables.Count > 0) ? Model.Tables[2] : null;
+    int i = 1;
 }
 <!--  ************************* Page Title Starts Here ************************** -->
 
@@ -20,67 +26,43 @@
 <!--  ************************* Gallery Starts Here ************************** -->
 <div id="portfolio" class="gallery">
     <div class="container">
-
         <div class="row">
-
-
-            @*<div class="gallery-filter d-none d-sm-block">
-                    <button class="btn btn-default filter-button" data-filter="all">All</button>
-                    <button class="btn btn-default filter-button" data-filter="hdpe">Finance</button>
-                    <button class="btn btn-default filter-button" data-filter="sprinkle">Digital Marketing</button>
-                    <button class="btn btn-default filter-button" data-filter="spray"> Money</button>
-                    <button class="btn btn-default filter-button" data-filter="irrigation">Business Alaysis</button>
+            @foreach (var item in imageUrl.AsEnumerable())
+            {
+                string url = "/uplodedimage/" + events.Rows[0]["EventId"].ToString() + "-" + item["ImageName"].ToString() + "";
+                <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter hdpe">
+                    <img src="@url" class="img-responsive">
                 </div>
-                <br />*@
-
-
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter hdpe">
-                <img src="~/assets/images/events/image_01.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter sprinkle">
-                <img src="~/assets/images/events/image_02.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter hdpe">
-                <img src="~/assets/images/events/image_01.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter irrigation">
-                <img src="~/assets/images/events/image_03.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter spray">
-                <img src="~/assets/images/events/image_04.jpg" class="img-responsive">
-            </div>
-
-
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter spray">
-                <img src="~/assets/images/events/image_05.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-3 col-sm-4 col-xs-6 filter irrigation">
-                <img src="~/assets/images/events/image_06.jpg" class="img-responsive">
-            </div>
-
-            <div class="gallery_product col-lg-3 col-md-4 col-sm-3 col-xs-6 filter irrigation">
-                <img src="~/assets/images/events/image_07.jpg" class="img-responsive">
-            </div>
-
-
+            }
+            
+        </div>
+        <div class="row">
+            @foreach (var item in videoUrl.AsEnumerable())
+            {
+                <div class="col-md-1 col-sm-6 col-xs-12">
+                    <a style="color: #71b61b;font-size: 12px;" href="@item["VideoUrl"].ToString()" target="_blank">Video - @i</a>
+                </div>
+                i = i + 1;
+            }
         </div>
     </div>
-
-
 </div>
 <section class="container-fluid mission-vision">
     <div class="container">
         <div class="row mission">
             <div class="col-md-12 mv-det">
-                <h1>Event Detail Content</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer neque libero, pulvinar et elementum quis, facilisis eu ante. Mauris non placerat sapien. Pellentesque tempor arcu non odio scelerisque ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam varius eros consequat auctor gravida. Fusce tristique lacus at urna sollicitudin pulvinar. Suspendisse hendrerit ultrices mauris.</p>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container-fluid mission-vision">
+    <div class="container">
+        <div class="row mission">
+            <div class="col-md-12 mv-det">
+                <h1>@events.Rows[0]["Title"].ToString()</h1>
+                <small style="color: #71b61b;font-size: 12px;">@events.Rows[0]["EventDate"].ToString()</small>
+                <p>@events.Rows[0]["Description"].ToString()</p>
             </div>
         </div>
     </div>

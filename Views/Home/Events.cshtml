@@ -1,5 +1,10 @@
-﻿@{
-    ViewBag.Title = "Contact";
+﻿@using System.Data;
+@model DataSet
+@{
+    ViewBag.Title = "Events";
+    var events = (Model != null && Model.Tables.Count > 0) ? Model.Tables[0] : null;
+    var imageUrl = (Model != null && Model.Tables.Count > 0) ? Model.Tables[1] : null;
+    var videoUrl = (Model != null && Model.Tables.Count > 0) ? Model.Tables[2] : null;
 }
 <!--  ************************* Page Title Starts Here ************************** -->
 
@@ -16,61 +21,45 @@
 </div>
 
 <!-- ################# Our Events Starts Here#######################--->
-
-<section class="our-blog">
-    <div class="container">
-        <div class="row session-title">
-            <h2> Our Events </h2>
-            @*<p>Take a look at what people say about US </p>*@
-        </div>
-        <div class="blog-row row">
-            <div class="col-md-4 col-sm-6">
-                <div class="single-blog">
-                    <figure>
-                        <img src="../assets/images/events/image_01.jpg" alt="">
-                    </figure>
-                    <div class="blog-detail">
-                        <small>August 10 2018</small>
-                        <h4>Methods of Recuirtments</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam justo neque, aliquet sit amet elementum vel, vehicula eget eros. Vivamus arcu metus, mattis sed sagittis at, sagittis quis neque. Praesent.</p>
-                        <div class="link">
-                            <a href="@Url.Action("EventDetail","Home")">Read more </a><i class="fas fa-long-arrow-alt-right"></i>
-                        </div>
-                    </div>
-
-
-                </div>
+@if (events.AsEnumerable().Count() > 0)
+{
+    <section class="our-blog">
+        <div class="container">
+            <div class="row session-title">
+                <h2> Our Events </h2>
             </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="single-blog">
-                    <figure>
-                        <img src="../assets/images/events/image_02.jpg" alt="">
-                    </figure>
-                    <div class="blog-detail">
-                        <small>August 10 2018</small>
-                        <h4>Methods of Recuirtments</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam justo neque, aliquet sit amet elementum vel, vehicula eget eros. Vivamus arcu metus, mattis sed sagittis at, sagittis quis neque. Praesent.</p>
-                        <div class="link">
-                            <a href="@Url.Action("EventDetail","Home")">Read more </a><i class="fas fa-long-arrow-alt-right"></i>
+            <div class="blog-row row">
+                @foreach (var item in events.AsEnumerable())
+                {
+                    var image = imageUrl.AsEnumerable().Where(x => Convert.ToInt32(x["EventId"].ToString()) == Convert.ToInt32(item["EventId"].ToString())).FirstOrDefault();
+                    string url = "/uplodedimage/" + item["EventId"].ToString() + "-" + image["ImageName"].ToString() + "";
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-blog">
+                            <figure style="width: 360px;height: 239px;">
+                                <img src="@url" alt="@item["Title"].ToString()">
+                            </figure>
+                            <div class="blog-detail">
+                                <small>@item["EventDate"].ToString()</small>
+                                <h4>@item["Title"].ToString()</h4>
+                                <p> @item["Description"].ToString()</p>
+                                <div class="link">
+                                    <a href="@Url.Action("EventDetail","Home",new { EventId = Convert.ToInt32(item["EventId"].ToString()) })">Read more </a><i class="fas fa-long-arrow-alt-right"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <div class="single-blog">
-                    <figure>
-                        <img src="../assets/images/events/image_03.jpg" alt="">
-                    </figure>
-                    <div class="blog-detail">
-                        <small>August 10 2018</small>
-                        <h4>Methods of Recuirtments</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam justo neque, aliquet sit amet elementum vel, vehicula eget eros. Vivamus arcu metus, mattis sed sagittis at, sagittis quis neque. Praesent.</p>
-                        <div class="link">
-                            <a href="@Url.Action("EventDetail","Home")">Read more </a><i class="fas fa-long-arrow-alt-right"></i>
-                        </div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
-    </div>
-</section>
+    </section>
+}
+else
+{
+    <section class="our-blog">
+        <div class="container">
+            <div class="row session-title">
+                <h2> No Events </h2>
+            </div>
+        </div>
+    </section>
+}
