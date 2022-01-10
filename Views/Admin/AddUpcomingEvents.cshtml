@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Up-Coming Events";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/admin/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Up-Coming Events</span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div id="modelForm">
+            <div class="blank">
+                <div class="blank-page">
+                    <div class="col-lg-12"><p id="msg" style="color:forestgreen;text-align:left;font-size:20px">@ViewBag.Msg</p></div>
+                    <div class="col-lg-12"><p id="msg" style="color:red;text-align:left;font-size:20px">@ViewBag.Error</p></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group pull-right" id="divForm">
+                        @using (Html.BeginForm("SaveUpcomingEvents", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "idAddEvent" }))
+                        {
+                            <input id="UpCommingEventId" name="UpCommingEventId" value="0" type="hidden" />
+                            <div class="styled-input">
+                                <div class="col-md-12 form-group">
+                                    <lable>Title:<span class="mandatory">*</span></lable>
+                                    <input type="text" id="Title" placeholder="Enter Your Title" name="Title" value="" class="form-control" required />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable>Sub-Title:<span class="mandatory">*</span></lable>
+                                    <textarea rows="4" placeholder="Enter Your Sub Title" name="SubTitle" id="SubTitle" class="form-control" required></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 form-group">
+                                    <div class="bootstrap-iso">
+                                        <label>Date :<span class="mandatory">*</span></label>
+                                        <input type="text" id="EventDate" name="EventDate" value="" class="form-control clsDate" required />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable>Address:<span class="mandatory">*</span></lable>
+                                    <textarea rows="4" placeholder="Enter Your Sub Address" name="Address" id="Address" class="form-control" required></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable> Long Description:<span class="mandatory">*</span></lable>
+                                    <select id="Status" name="Status" required>
+                                        <option value="1">Active</option>
+                                        <option value="0">In-Active</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-9 form-group">
+
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <a href="@Url.Action("UpcomingEvent", "Admin")" style="margin-top: 23px;" class="btn btn-primary pull-right">Back To List</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <button type="submit" name="btnSubmit" id="btnSubmit" style="margin-top: 23px;" class="btn btn-primary pull-right">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--//content-->
+    <!---->
+</div>

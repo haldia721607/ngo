@@ -1,0 +1,161 @@
+﻿@{
+    ViewBag.Title = "UpComming Event List";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/admin/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>UpComming Events List</span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div id="modelForm">
+            <div class="blank">
+                <div class="blank-page">
+                    <div class="col-lg-12"><p id="msg" style="color:forestgreen;text-align:left;font-size:20px">@ViewBag.Msg</p></div>
+                    <div class="col-lg-12"><p id="msg" style="color:red;text-align:left;font-size:20px">@ViewBag.Error</p></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group pull-right" id="divForm" style="display:none">
+                        @using (Html.BeginForm("UpdateUpcomingEvents", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "idAddEvent" }))
+                        {
+                            <input id="UpCommingEventId" name="UpCommingEventId" value="0" type="hidden" />
+                            <div class="styled-input">
+                                <div class="col-md-12 form-group">
+                                    <lable>Title:<span class="mandatory">*</span></lable>
+                                    <input type="text" id="Title" placeholder="Enter Your Title" name="Title" value="" class="form-control" required />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable>Sub-Title:<span class="mandatory">*</span></lable>
+                                    <textarea rows="4" placeholder="Enter Your Sub Title" name="SubTitle" id="SubTitle" class="form-control" required></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 form-group">
+                                    <div class="bootstrap-iso">
+                                        <label>Date :<span class="mandatory">*</span></label>
+                                        <input type="text" id="EventDate" name="EventDate" value="" class="form-control clsDate" required />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable>Address:<span class="mandatory">*</span></lable>
+                                    <textarea rows="4" placeholder="Enter Your Sub Address" name="Address" id="Address" class="form-control" required></textarea>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable> Long Description:<span class="mandatory">*</span></lable>
+                                    <select id="Status" name="Status" required>
+                                        <option value="1">Active</option>
+                                        <option value="0">In-Active</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-8 form-group">
+
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <button type="button" name="btnReset" id="btnReset" style="margin-top: 23px;" class="btn btn-primary pull-right">Reset</button>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <a href="@Url.Action("UpcomingEvent", "Admin")" style="margin-top: 23px;" class="btn btn-primary pull-right">Back To List</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <button type="submit" name="btnSubmit" id="btnSubmit" style="margin-top: 23px;" class="btn btn-primary pull-right">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+
+                <div class="blank-page">
+                    <div id="UpCommingEventListGrid"></div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//content-->
+    <!---->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        hplc.ajaxCall("GET", "/Admin/UpcomingEvents", {}, "text", function (d) {
+            var result = JSON.parse(d);
+            if (result !== "null" && result.CustomerLists !== "") {
+                var fields = [
+                    { name: "UpCommingEventId", css: "hidden", },
+                    { name: "SubTitle", css: "hidden", },
+                    { name: "Address", css: "hidden", },
+                    { name: "Title", type: "text", title: "Title", sorting: true, filtering: true, width: 50 },
+                    { name: "EventDate", title: "Even tDate", sorting: true, filtering: true, width: 50 },
+                    {
+                        title: "Status",
+                        width: 20,
+                        name: "Status",
+                        itemTemplate: function (value) {
+                            if (value === true) {
+                                return "Active";
+                            } else {
+                                return "In-Active";
+                            }
+                        }
+                    },
+                    { name: "Status", css: "hidden" },
+                ];
+                var options = {
+                    filtering: true,
+                    editing: true,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    controller: {
+                        CustomerLists: result,
+                        loadData: function (filter) {
+                            return $.grep(this.CustomerLists, function (CustomerList) {
+                                return (!filter.Title || CustomerList.Title.toLowerCase().indexOf(filter.Title.toLowerCase()) > -1);
+                            });
+                        }
+                    },
+                    rowClick: function (args) {
+                        if (args.item.UpCommingEventId > 0) {
+                            $("#UpCommingEventId").val(args.item.UpCommingEventId);
+                            $("#SubTitle").val(args.item.SubTitle);
+                            $("#Address").val(args.item.Address);
+                            $("#Title").val(args.item.Title);
+                            $("#EventDate").val(args.item.EventDate);
+                            $("#Status").val(args.item.Status === true ? 1 : 0);
+                            $("#divForm").css('display', 'block');
+                        }
+                        else {
+                            alert("Please Select Row")
+                        }
+                    },
+                    fields: fields
+                };
+                $.extend(options, hplc.grid_options);
+                $("#UpCommingEventListGrid").jsGrid(options);
+                hplc.filteOnKeyPress("#UpCommingEventListGrid");
+            }
+        });
+
+        $("#btnReset").click(function (e) {
+            e.preventDefault();
+            $("#UpCommingEventId").val("");
+            $('#SubTitle').val("");
+            $("#Address").val("");
+            $("#Title").val("");
+            $('#EventDate').val("");
+            $('#Status').val(1);
+            $("#divForm").css('display', 'none');
+        });
+    });
+</script>

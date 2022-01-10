@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Contact Form";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/admin/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Contact Form </span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div id="modelForm">
+            <div class="blank">
+                <div class="blank-page">
+                    <div class="col-lg-12"><p id="msg" style="color:#ef0f44;text-align:center">@ViewBag.Msg</p></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group pull-right">
+                        <div class="styled-input" id="divShowDetail" style="display:none;">
+                            <div class="col-md-12 form-group">
+                                <b><lable>Name </lable></b>
+                                <p id="pName"></p>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <b><lable> Address </lable></b>
+                                <p id="pAddress"></p>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <b><lable>Mobile Number </lable></b>
+                                <p id="pMobileNumber"></p>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <b><lable> Message </lable></b>
+                                <p id="pMessage"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="blank-page">
+                    <div id="listGrid"></div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//content-->
+    <!---->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        hplc.ajaxCall("GET", "/Admin/ListContactInfo", {}, "text", function (d) {
+            var result = JSON.parse(d);
+            if (result !== "null" && result !== "") {
+                var fields = [
+                    { name: "ContactId", css: "hidden", },
+                    { name: "Name", type: "text", title: "Name", sorting: true, filtering: true, width: 50 },
+                    { name: "Address", title: "Address", sorting: true, filtering: true, width: 50 },
+                    { name: "MobileNumber", title: "Mobile Number", sorting: true, filtering: true, width: 50 },
+                    { name: "Message", css: "hidden"},
+                    {
+                        width: 20,
+                        title: "Action", 
+                        itemTemplate: function (value, args) {
+                            var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i>View</a>')
+                                .click(function (e) {
+                                    editContactForm('Edit', args);
+                                    return false;
+                                });
+                            return $("<div class='display-flex'></div>").append($customeEditButton);
+                        }
+                    }
+
+                ];
+                var options = {
+                    filtering: true,
+                    editing: false,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    controller: {
+                        result: result,
+                        loadData: function (filter) {
+                            return $.grep(this.result, function (result) {
+                                return (!filter.Name || result.Name.toLowerCase().indexOf(filter.Name.toLowerCase()) > -1);
+                            });
+                        }
+                    },
+                    fields: fields
+                };
+                $.extend(options, hplc.grid_options);
+                $("#listGrid").jsGrid(options);
+                hplc.filteOnKeyPress("#listGrid");
+            }
+            formSubmitHandler = function () {
+                manageCompanyMaster()
+            }; 
+            var editContactForm = function (dilogType, info) {
+                $("#pName").text(info.Name);
+                $("#pAddress").text(info.Address);
+                $("#pMobileNumber").text(info.MobileNumber);
+                $("#pMessage").text(info.Message);
+                $("#divShowDetail").css('display', 'block');
+            };
+        });
+    });
+</script>

@@ -1,0 +1,149 @@
+﻿@{
+    ViewBag.Title = "Event List";
+    Layout = "~/Views/Shared/_adminLayout.cshtml";
+}
+
+<div id="page-wrapper" class="gray-bg dashbard-1">
+    <div class="content-main">
+        <!--banner-->
+        <div class="banner">
+            <h2>
+                <a href="/admin/dashboard">Home</a>
+                <i class="fa fa-angle-right"></i>
+                <span>Events List</span>
+            </h2>
+        </div>
+        <!--//banner-->
+        <!--content-->
+        <div id="modelForm">
+            <div class="blank">
+                <div class="blank-page">
+                    <div class="col-lg-12"><p id="msg" style="color:forestgreen;text-align:left;font-size:20px">@ViewBag.Msg</p></div>
+                    <div class="col-lg-12"><p id="msg" style="color:red;text-align:left;font-size:20px">@ViewBag.Error</p></div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group pull-right" id="divForm" style="display:none">
+                        @using (Html.BeginForm("UpdateEvent", "admin", FormMethod.Post, new { enctype = "multipart/form-data", @id = "idAddEvent" }))
+                        {
+                            <input id="EventId" name="EventId" value="0" type="hidden" />
+                            <div class="styled-input">
+                                <div class="col-md-12 form-group">
+                                    <lable> Short Description :<span class="mandatory">*</span></lable>
+                                    <input type="text" id="ShortDescription" name="ShortDescription" value="" class="form-control" required />
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-4 form-group">
+                                    <div class="bootstrap-iso">
+                                        <label>Date :<span class="mandatory">*</span></label>
+                                        <input type="text" id="EventDate" name="EventDate" value="" class="form-control clsDate" required />
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-md-12 form-group">
+                                    <lable> Long Description:<span class="mandatory">*</span></lable>
+                                    <textarea rows="7" placeholder="Enter Your Description" name="LongDescription" id="LongDescription" class="form-control" required></textarea>
+                                </div>
+                                <div class="col-md-12 form-group">
+                                    <lable> Status:<span class="mandatory">*</span></lable>
+                                    <select id="IsActive" name="IsActive" required>
+                                        <option value="1">Active</option>
+                                        <option value="0">In-Active</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-10 form-group">
+
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <button type="button" name="btnReset" id="btnReset" style="margin-top: 23px;" class="btn btn-primary pull-right">Reset</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <div class="appointment-btn text-lg-right">
+                                        <button type="submit" name="btnSubmit" id="btnSubmit" style="margin-top: 23px;" class="btn btn-primary pull-right">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="blank-page">
+                    <div id="listGrid"></div>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <!--//content-->
+    <!---->
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        hplc.ajaxCall("GET", "/Admin/Events", {}, "text", function (d) {
+            var result = JSON.parse(d);
+            if (result !== "") {
+                var fields = [
+                    { name: "EventId", css: "hidden" },
+                    { name: "Title", type: "text", title: "Short Description", sorting: true, filtering: true, width: 200 },
+                    { name: "EventDate", title: "Event Date", sorting: true, filtering: true, width: 30 },
+                    {
+                        title: "Status",
+                        width: 20,
+                        name: "IsActive",
+                        itemTemplate: function (value) {
+                            if (value === true) {
+                                return "Active";
+                            } else {
+                                return "In-Active";
+                            }
+                        }
+                    },
+                    { name: "IsActive", css: "hidden" },
+                    { name: "Description", css: "hidden" },
+
+                ];
+                var options = {
+                    filtering: true,
+                    editing: true,
+                    sorting: true,
+                    paging: true,
+                    autoload: true,
+                    controller: {
+                        result: result,
+                        loadData: function (filter) {
+                            return $.grep(this.result, function (result) {
+                                return (!filter.Title || result.Title.toLowerCase().indexOf(filter.Title.toLowerCase()) > -1);
+                            });
+                        }
+                    },
+                    rowClick: function (args) {
+                        if (args.item.EventId > 0) {
+                            $("#EventId").val(args.item.EventId);
+                            $("#ShortDescription").val(args.item.Title);
+                            $("#EventDate").val(args.item.EventDate);
+                            $("#LongDescription").val(args.item.Description);
+                            $("#IsActive").val(args.item.IsActive === true ? 1 : 0);
+                            $("#divForm").css('display', 'block');
+                        }
+                        else {
+                            alert("Please Select Row")
+                        }
+                    },
+                    fields: fields
+                };
+                $.extend(options, hplc.grid_options);
+                $("#listGrid").jsGrid(options);
+                hplc.filteOnKeyPress("#listGrid");
+            }
+        });
+
+        $("#btnReset").click(function (e) {
+            e.preventDefault();
+            $("#EventId").val("");
+            $('#ShortDescription').val("");
+            $("#EventDate").val("");
+            $("#LongDescription").val("");
+            $('#IsActive').val(1);
+            $("#divForm").css('display', 'none');
+        });
+    });
+</script>

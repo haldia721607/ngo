@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "LoginAuthentication";
+
+}
+<div id="preloader">
+    <div id="status">&nbsp;</div>
+</div>
+
+<!--===============================================================================================-->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        Redirect();
+    });
+
+    function Redirect() {
+       
+        var Redirect = "/DashBoard/DashBoard"
+        var BURL = window.location.toString().split("/");       
+        window.location = BURL[0].toString()+"//"+BURL[2].toString() + Redirect;
+    }
+
+</script>

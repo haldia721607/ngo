@@ -1,0 +1,79 @@
+﻿
+<nav class="navbar-default navbar-static-top" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <h1> <a class="navbar-brand" href="/home/dashboard">Ngo Backoffice</a></h1>
+    </div>
+    <div class=" border-bottom">
+        <div class="full-left">
+            @*<section class="full-top">
+                    <button id="toggle"><i class="fa fa-arrows-alt"></i></button>
+                </section>*@
+            <form class=" navbar-left-right">
+                <span>Welcome : @Session["UserName"]</span>
+            </form>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <!--<div class="drop-men">
+        <ul class=" nav_1">
+            <li class="dropdown">
+                <a href="/DashBoard/DashBoard" class="dropdown-toggle dropdown-at" data-toggle="dropdown">@Session["UserName"]<span class=" name-caret"><i class="caret"></i></span></a><a target="_blank" href="/Home/index">-->
+    @*<img src="~/assetsAdmin/admin/images/logo.png">*@
+    <!--</a>
+    <ul class="dropdown-menu " role="menu">-->
+    @*<li><a href="#"><i class="fa fa-user"></i>Edit Profile</a></li>*@
+    <!--<li><a href="~/home/Logout"><i class="fa fa-user"></i>Sign Out</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </div>-->
+    <!-- /.navbar-collapse -->
+    <div class="clearfix">
+
+    </div>
+
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                @*@if (Convert.ToInt64(Session["UserType"]) == 1)
+                    {*@
+                @*<li>
+                        <a href="#" class="hvr-bounce-to-right"><i class="fa fa-list nav_icon"></i> <span class="nav-label">Master Forms</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="@Url.Action("PayOut", "admin")" class="hvr-bounce-to-right"><i class="fa fa-book nav_icon "></i><span class="nav-label">Import Payout</span></a>
+                            <li>
+                        </ul>
+                    </li>*@
+
+                @*<li>
+                        <a href="#" class="hvr-bounce-to-right"><i class="fa fa-file nav_icon"></i> <span class="nav-label">Reports</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="hidden">
+                                <a href="dashboard" class="hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Day Book Report</span> </a>
+                            </li>
+                        </ul>
+                    </li>*@
+                @* } *@
+                <li><a href="@Url.Action("DashBoard", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">DashBoard</span></a></li>
+                <li><a href="@Url.Action("Event", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Events</span></a></li>
+                <li><a href="@Url.Action("AddEvent", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Add Events</span></a></li>
+                <li><a href="@Url.Action("UpcomingEvent", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Upcoming Events</span></a></li>
+                <li><a href="@Url.Action("AddUpcomingEvents", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Add Upcoming Events</span></a></li>
+                <li><a href="@Url.Action("AddressInfo", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Address & Donate Info</span></a></li>
+                <li><a href="@Url.Action("ContactInfo", "Admin")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Contact Info</span></a></li>
+                <li><a href="@Url.Action("Home", "Logout")" class="hvr-bounce-to-right"><i class="fa fa-building-o nav_icon "></i><span class="nav-label">Logout</span></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
