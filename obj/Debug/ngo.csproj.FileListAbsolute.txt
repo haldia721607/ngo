@@ -76,3 +76,4 @@ D:\rohit\ngo\obj\Debug\ngo.csproj.CoreCompileInputs.cache
 D:\rohit\ngo\obj\Debug\ngo.csproj.CopyComplete
 D:\rohit\ngo\obj\Debug\ngo.dll
 D:\rohit\ngo\obj\Debug\ngo.pdb
+D:\rohit\ngo\obj\Debug\ngo.csprojAssemblyReference.cache

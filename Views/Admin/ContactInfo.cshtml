@@ -60,10 +60,10 @@
                     { name: "Name", type: "text", title: "Name", sorting: true, filtering: true, width: 50 },
                     { name: "Address", title: "Address", sorting: true, filtering: true, width: 50 },
                     { name: "MobileNumber", title: "Mobile Number", sorting: true, filtering: true, width: 50 },
-                    { name: "Message", css: "hidden"},
+                    { name: "Message", css: "hidden" },
                     {
                         width: 20,
-                        title: "Action", 
+                        title: "Action",
                         itemTemplate: function (value, args) {
                             var $customeEditButton = $('<a class="btn btn-primary"><i class="fa fa-edit"></i>View</a>')
                                 .click(function (e) {
@@ -97,7 +97,7 @@
             }
             formSubmitHandler = function () {
                 manageCompanyMaster()
-            }; 
+            };
             var editContactForm = function (dilogType, info) {
                 $("#pName").text(info.Name);
                 $("#pAddress").text(info.Address);

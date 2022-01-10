@@ -21,7 +21,7 @@ namespace ngo.Controllers
         }
 
         [HttpGet]
-        public ActionResult Event(bool status=false)
+        public ActionResult Event(bool status = false)
         {
             if (status)
             {
@@ -56,7 +56,6 @@ namespace ngo.Controllers
         public ActionResult AddEvent()
         {
             return View();
-
         }
         [HttpPost]
         public ActionResult AddEvent(HttpPostedFileBase[] httpPostedFileBases)
@@ -177,7 +176,7 @@ namespace ngo.Controllers
             return RedirectToAction("Event", new { status = true });
         }
         [HttpGet]
-        public ActionResult UpcomingEvent(bool status=false)
+        public ActionResult UpcomingEvent(bool status = false)
         {
             if (status)
             {
@@ -228,7 +227,7 @@ namespace ngo.Controllers
                 SqlParameters.Add(new SqlParameter("@QueryType", "insert"));
                 ds = DBManager.ExecuteDataSetWithParamiter("usp_UpCommingEventMaster", CommandType.StoredProcedure, SqlParameters);
                 ViewBag.Msg = ds.Tables[0].Rows[0]["msg"].ToString();
-                if (ds.Tables[0].Rows[0]["msg"].ToString() =="success")
+                if (ds.Tables[0].Rows[0]["msg"].ToString() == "success")
                 {
                     ViewBag.Msg = "Upcomming Event add successfully.";
                 }
@@ -250,6 +249,7 @@ namespace ngo.Controllers
             try
             {
                 List<SqlParameter> SqlParameters = new List<SqlParameter>();
+                SqlParameters.Add(new SqlParameter("@UpCommingEventId", Convert.ToInt32(Request.Form["UpCommingEventId"])));
                 SqlParameters.Add(new SqlParameter("@Title", Request.Form["Title"].ToString()));
                 SqlParameters.Add(new SqlParameter("@SubTitle", Request.Form["SubTitle"].ToString()));
                 SqlParameters.Add(new SqlParameter("@EventDate", Request.Form["EventDate"].ToString()));
@@ -295,7 +295,7 @@ namespace ngo.Controllers
             {
                 List<SqlParameter> SqlParameters = new List<SqlParameter>();
                 SqlParameters.Add(new SqlParameter("@UserId", Convert.ToInt32(Session["UserId"])));
-                SqlParameters.Add(new SqlParameter("@OrganizationName", Request.Form["ImageUrl_2"].ToString()));
+                SqlParameters.Add(new SqlParameter("@OrganizationName", Request.Form["OrganizationName"].ToString()));
                 SqlParameters.Add(new SqlParameter("@AccountNumber", Request.Form["AccountNumber"].ToString()));
                 SqlParameters.Add(new SqlParameter("@IFSC", Request.Form["IFSC"].ToString()));
                 SqlParameters.Add(new SqlParameter("@Address", Request.Form["Address"].ToString()));

@@ -1,54 +1,97 @@
-﻿@{
-    ViewBag.Title = "Contact";
-}<!--  ************************* Page Title Starts Here ************************** -->
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE HTML>
+<html lang="zxx">
 
-<div class="page-nav no-margin row">
-    <div class="container">
-        <div class="row">
-            <h2>Login</h2>
-            <ul>
-                <li> <a href="#"><i class="fas fa-home"></i> Home</a></li>
-                <li><i class="fas fa-angle-double-right"></i> Login</li>
-            </ul>
+<head>
+    <title>Ngo</title>
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- Meta tag Keywords -->
+    <!-- css files -->
+    <link rel="stylesheet" href="~/assetsAdmin/home/css/style.css" type="text/css" media="all" />
+    <!-- Style-CSS -->
+    <link rel="stylesheet" href="~/assetsAdmin/home/css/fontawesome-all.css">
+    <!-- Font-Awesome-Icons-CSS -->
+    <!-- //css files -->
+    <!-- web-fonts -->
+    <link href="//fonts.googleapis.com/css?family=Reem+Kufi&amp;subset=arabic" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <!-- //web-fonts -->
+</head>
+
+<body>
+    <!-- title -->
+    <h1>
+        <span>W</span>elcome
+        <span>I</span>n
+        <span>P</span>ayout
+        <span>M</span>anagement
+    </h1>
+    <!-- //title -->
+    <!-- content -->
+    <div class="sub-main-w3">
+        <div class="text-center p-t-10 p-b-10">
+            <span class="txt1Error">
+                @ViewBag.Msg
+            </span>
         </div>
-    </div>
-</div>
-<div class="row contact-rooo no-margin">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div style="padding:20px" class="col-sm-6">
-                @using (Html.BeginForm("Authentic", "Home", FormMethod.Post))
-                {
-                    <p style="color:darkred">@ViewBag.Msg</p><br>
-                    <div class="row cont-row">
-                        <div class="col-sm-3">
-                            <label>Email </label><span>:</span>
-                        </div>
-                        <div class="col-sm-8">
-                            <input type="text" id="Email" placeholder="Enter Email" name="Email" class="form-control input-sm">
-                        </div>
-                    </div>
-                    <div class="row cont-row">
-                        <div class="col-sm-3">
-                            <label>Password </label><span>:</span>
-                        </div>
-                        <div class="col-sm-8">
-                            <input type="text" id="Password" name="Password" placeholder="Enter Password" class="form-control input-sm">
-                        </div>
-                    </div>
-                    <div style="margin-top:10px;" class="row pull-right">
-                        <div style="padding-top:10px;" class="col-sm-3"><label></label></div>
-                        <div class="col-sm-8 ">
-                            <button type="submit" class="btn btn-primary btn-sm ">Login</button>
-                        </div>
-                    </div>
-                }
+        <form action="#" id="loginform" method="post">
+            <div class="form-style-agile">
+                <label>
+                    Username
+                    <i class="fas fa-user"></i>
+                </label>
+                <input placeholder="Username" id="loginid" name="loginid" type="text" />
             </div>
-            <div class="col-sm-3"></div>
-        </div>
+            <div class="form-style-agile">
+                <label>
+                    Password
+                    <i class="fas fa-unlock-alt"></i>
+                </label>
+                <input placeholder="password" name="password" type="password" />
+            </div>
+            <!-- //switch -->
+            <div class="col-lg-12"><p style="color:#03A9F4;text-align:center" id="msg"></p></div>
+            <input type="submit" id="loginsubmit" name="loginsubmit" value="Log In">
+        </form>
     </div>
-</div>
+    <!-- //content -->
+    <!-- copyright -->
+    <div class="footer">
+        <p>
+            &copy; @DateTime.Now.Year Srimanta Bazar. All Rights Reserved
+        </p>
+    </div>
+    <!-- //copyright -->
+    <!--===============================================================================================-->
+    <script src="~/assetsAdmin/home/js/jquery-3.3.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assetsAdmin/home/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assetsAdmin/home/js/main.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/assetsAdmin/common.js"></script>
+    <script src="~/assetsAdmin/jquery.validate.js"></script>
+    <script src="~/assetsAdmin/shared.js"></script>
+    <!-- Bootstrap Date-Picker Plugin -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
+</body>
 
-
+</html>
