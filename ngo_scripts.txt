@@ -1,0 +1,554 @@
+USE [master]
+GO
+/****** Object:  Database [ngo]    Script Date: 05-02-22 11:34:02 AM ******/
+CREATE DATABASE [ngo]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'ngo', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\ngo.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'ngo_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\ngo_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+ALTER DATABASE [ngo] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [ngo].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [ngo] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [ngo] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [ngo] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [ngo] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [ngo] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [ngo] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [ngo] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [ngo] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [ngo] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [ngo] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [ngo] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [ngo] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [ngo] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [ngo] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [ngo] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [ngo] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [ngo] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [ngo] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [ngo] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [ngo] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [ngo] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [ngo] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [ngo] SET RECOVERY FULL 
+GO
+ALTER DATABASE [ngo] SET  MULTI_USER 
+GO
+ALTER DATABASE [ngo] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [ngo] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [ngo] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [ngo] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [ngo] SET DELAYED_DURABILITY = DISABLED 
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'ngo', N'ON'
+GO
+ALTER DATABASE [ngo] SET QUERY_STORE = OFF
+GO
+USE [ngo]
+GO
+/****** Object:  Table [dbo].[tblContact]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblContact](
+	[ContactId] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](max) NULL,
+	[Address] [varchar](max) NULL,
+	[MobileNumber] [varchar](20) NULL,
+	[Message] [varchar](max) NULL,
+	[CreatedDate] [date] NULL,
+ CONSTRAINT [PK_tblContact] PRIMARY KEY CLUSTERED 
+(
+	[ContactId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblEvent]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblEvent](
+	[EventId] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [varchar](max) NULL,
+	[Description] [varchar](max) NULL,
+	[EventDate] [varchar](50) NULL,
+	[IsActive] [bit] NULL,
+	[CreatedDate] [varchar](50) NULL,
+	[ModifyDate] [varchar](50) NULL,
+ CONSTRAINT [PK_tblEvent] PRIMARY KEY CLUSTERED 
+(
+	[EventId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblImage]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblImage](
+	[ImageId] [int] IDENTITY(1,1) NOT NULL,
+	[EventId] [int] NULL,
+	[ImageName] [varchar](500) NULL,
+	[ImageUrl] [varchar](max) NULL,
+	[CreatedDate] [varchar](100) NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tblImage] PRIMARY KEY CLUSTERED 
+(
+	[ImageId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblUpComming]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblUpComming](
+	[UpCommingEventId] [int] IDENTITY(1,1) NOT NULL,
+	[Title] [varchar](500) NULL,
+	[SubTitle] [varchar](max) NULL,
+	[Address] [varchar](1000) NULL,
+	[EventDate] [varchar](50) NULL,
+	[CreatedDate] [varchar](50) NULL,
+	[Status] [bit] NOT NULL,
+ CONSTRAINT [PK_tblUpComming] PRIMARY KEY CLUSTERED 
+(
+	[UpCommingEventId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tblVideo]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tblVideo](
+	[VideoId] [int] IDENTITY(1,1) NOT NULL,
+	[EventId] [int] NULL,
+	[VideoUrl] [varchar](max) NULL,
+	[CreatedDate] [varchar](50) NULL,
+	[IsActive] [bit] NULL,
+ CONSTRAINT [PK_tblVideo] PRIMARY KEY CLUSTERED 
+(
+	[VideoId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User](
+	[UserId] [int] IDENTITY(1,1) NOT NULL,
+	[LoginId] [nvarchar](30) NOT NULL,
+	[UserType] [int] NULL,
+	[FirstName] [nvarchar](50) NULL,
+	[MiddleName] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NULL,
+	[MobileNumber] [nvarchar](20) NULL,
+	[Email] [nvarchar](50) NULL,
+	[Password] [nvarchar](2000) NULL,
+	[PinCode] [nvarchar](50) NULL,
+	[AadharNumber] [nvarchar](50) NULL,
+	[CreatedDate] [datetime] NULL,
+	[StatusId] [int] NULL,
+	[ModifyDate] [datetime] NULL,
+	[OrganizationName] [varchar](max) NULL,
+	[AccountNumber] [varchar](50) NULL,
+	[IFSC] [varchar](50) NULL,
+	[Address] [nvarchar](max) NULL,
+	[Address2] [varchar](max) NULL,
+	[Address3] [varchar](max) NULL,
+ CONSTRAINT [PK_User] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[UseType]    Script Date: 05-02-22 11:34:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[UseType](
+	[UseTypeID] [int] NOT NULL,
+	[UseTypeName] [nvarchar](200) NOT NULL,
+	[StatusID] [int] NULL,
+	[DOE] [datetime] NULL,
+	[HomePage] [nvarchar](2500) NULL
+) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[tblContact] ON 
+GO
+INSERT [dbo].[tblContact] ([ContactId], [Name], [Address], [MobileNumber], [Message], [CreatedDate]) VALUES (1, N'RAVI', N'ZCXV SDBF SFDBGF', N'987654262626', N'ZVBKNL ZSNFVKNXKVN NZNCKZ C J', CAST(N'2021-12-28' AS Date))
+GO
+INSERT [dbo].[tblContact] ([ContactId], [Name], [Address], [MobileNumber], [Message], [CreatedDate]) VALUES (2, N'RAVI SHANKER Pandey', N'ravishankerpandey1990@gmail.com', N'09971480602', N'', CAST(N'2021-12-28' AS Date))
+GO
+INSERT [dbo].[tblContact] ([ContactId], [Name], [Address], [MobileNumber], [Message], [CreatedDate]) VALUES (3, N'RAVI SHANKER Pandey', N'ravishankerpandey1990@gmail.com', N'09971480602', N'', CAST(N'2021-12-28' AS Date))
+GO
+INSERT [dbo].[tblContact] ([ContactId], [Name], [Address], [MobileNumber], [Message], [CreatedDate]) VALUES (4, N'RAVI SHANKER Pandey', N'ravishankerpandey1990@gmail.com', N'09971480602', N'sdfgnhjb', CAST(N'2021-12-28' AS Date))
+GO
+SET IDENTITY_INSERT [dbo].[tblContact] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblEvent] ON 
+GO
+INSERT [dbo].[tblEvent] ([EventId], [Title], [Description], [EventDate], [IsActive], [CreatedDate], [ModifyDate]) VALUES (4, N'Integer vulputate vehicula', N'Integer vulputate vehicula dolor a eleifend. Duis aliquam condimentum sapien, eget tempor justo. Aenean porttitor nibh metus, sollicitudin egestas metus posuere et . Fusce egestas volutpat metus, in sodales sem bibendum porta. Nunc hendrerit nunc sit amet tellus posuere, at malesuada sem gravida. Integer maximus ultricies augue, at dapibus elit bibendum consequat. Cras faucibus tellus eleifend, fermentum purus in, dapibus sapien. Praesent nec ornare risus. Etiam iaculis, ligula vel gravida vestibulum, urna justo posuere ante, id pretium massa arcu sed mi. Nunc a sollicitudin sem. Duis tempus', N'14/01/2022', 1, N'Dec 30 2021 11:15PM', NULL)
+GO
+INSERT [dbo].[tblEvent] ([EventId], [Title], [Description], [EventDate], [IsActive], [CreatedDate], [ModifyDate]) VALUES (5, N'Duis aliquam condimentum sapien', N'Integer vulputate vehicula dolor a eleifend. Duis aliquam condimentum sapien, eget tempor justo. Aenean porttitor nibh metus, sollicitudin egestas metus posuere et . Fusce egestas volutpat metus, in sodales sem bibendum porta. Nunc hendrerit nunc sit amet tellus posuere, at malesuada sem gravida. Integer maximus ultricies augue, at dapibus elit bibendum consequat. Cras faucibus tellus eleifend, fermentum purus in, dapibus sapien. Praesent nec ornare risus. Etiam iaculis, ligula vel gravida vestibulum, urna justo posuere ante, id pretium massa arcu sed mi. Nunc a sollicitudin sem. Duis tempus', N'08/12/2021', 1, N'Jan  4 2022 11:10AM', NULL)
+GO
+SET IDENTITY_INSERT [dbo].[tblEvent] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblImage] ON 
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (1, 4, N'image_01.jpg', N'D:\rohit\ngo\uplodedimage\4-image_01.jpg', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (2, 4, N'image_02.jpg', N'D:\rohit\ngo\uplodedimage\4-image_02.jpg', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (3, 4, N'image_03.jpg', N'D:\rohit\ngo\uplodedimage\4-image_03.jpg', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (4, 4, N'image_04.jpg', N'D:\rohit\ngo\uplodedimage\4-image_04.jpg', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (5, 5, N'image_06.jpg', N'D:\rohit\ngo\uplodedimage\5-image_06.jpg', N'Jan  4 2022 11:10AM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (6, 5, N'image_07.jpg', N'D:\rohit\ngo\uplodedimage\5-image_07.jpg', N'Jan  4 2022 11:10AM', 1)
+GO
+INSERT [dbo].[tblImage] ([ImageId], [EventId], [ImageName], [ImageUrl], [CreatedDate], [IsActive]) VALUES (7, 5, N'image_08.jpg', N'D:\rohit\ngo\uplodedimage\5-image_08.jpg', N'Jan  4 2022 11:10AM', 1)
+GO
+SET IDENTITY_INSERT [dbo].[tblImage] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblUpComming] ON 
+GO
+INSERT [dbo].[tblUpComming] ([UpCommingEventId], [Title], [SubTitle], [Address], [EventDate], [CreatedDate], [Status]) VALUES (1, N'Child Education in Africa', N'Health check-up camp conducted for students of Mission Education centers', N'BlueDart , Marthandam (K.K District) , Tamil Nadu, IND , Phone: +91 9159669599 , Email: info@bluedart.in, Web: www.bluedart.in', N'30/12/2021', N'Dec 31 2021  7:29PM', 1)
+GO
+SET IDENTITY_INSERT [dbo].[tblUpComming] OFF
+GO
+SET IDENTITY_INSERT [dbo].[tblVideo] ON 
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (1, 4, N'https://youtu.be/VkSHmK9YELw', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (2, 4, N'https://youtu.be/VkSHmK9YELw', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (3, 4, N'https://youtu.be/VkSHmK9YELw', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (4, 4, N'https://youtu.be/VkSHmK9YELw', N'Dec 30 2021 11:15PM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (5, 5, N'https://youtu.be/VkSHmK9YELw', N'Jan  4 2022 11:10AM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (6, 5, N'https://youtu.be/VkSHmK9YELw', N'Jan  4 2022 11:10AM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (7, 5, N'https://youtu.be/VkSHmK9YELw', N'Jan  4 2022 11:10AM', 1)
+GO
+INSERT [dbo].[tblVideo] ([VideoId], [EventId], [VideoUrl], [CreatedDate], [IsActive]) VALUES (8, 5, N'https://youtu.be/VkSHmK9YELw', N'Jan  4 2022 11:10AM', 1)
+GO
+SET IDENTITY_INSERT [dbo].[tblVideo] OFF
+GO
+SET IDENTITY_INSERT [dbo].[User] ON 
+GO
+INSERT [dbo].[User] ([UserId], [LoginId], [UserType], [FirstName], [MiddleName], [LastName], [MobileNumber], [Email], [Password], [PinCode], [AadharNumber], [CreatedDate], [StatusId], [ModifyDate], [OrganizationName], [AccountNumber], [IFSC], [Address], [Address2], [Address3]) VALUES (1, N'admin', 1, N'Neeraj', N'Kumar', N'Pandey', N'87978 26438', N'abc@hotmail.com', N'123', N'110059', N'6.78679E+16', CAST(N'2021-11-11T13:55:10.353' AS DateTime), 1, NULL, N'Demo Organization', N'123456564534245', N'VFBC45', N'Demo Organization 2', N'Demo Organization 2', N'Demo Organization')
+GO
+SET IDENTITY_INSERT [dbo].[User] OFF
+GO
+INSERT [dbo].[UseType] ([UseTypeID], [UseTypeName], [StatusID], [DOE], [HomePage]) VALUES (1, N'Admin', 1, CAST(N'2021-09-02T16:10:52.723' AS DateTime), N'DashBoard')
+GO
+ALTER TABLE [dbo].[tblContact] ADD  CONSTRAINT [DF_tblContact_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblEvent] ADD  CONSTRAINT [DF_tblEvent_IsActive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblEvent] ADD  CONSTRAINT [DF_tblEvent_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblImage] ADD  CONSTRAINT [DF_tblImage_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblImage] ADD  CONSTRAINT [DF_tblImage_IsActive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[tblUpComming] ADD  CONSTRAINT [DF_tblUpComming_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblVideo] ADD  CONSTRAINT [DF_tblVideo_CreatedDate]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[tblVideo] ADD  CONSTRAINT [DF_tblVideo_IsActive]  DEFAULT ((1)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_UserType]  DEFAULT ((2)) FOR [UserType]
+GO
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_DataTime]  DEFAULT (getdate()) FOR [CreatedDate]
+GO
+ALTER TABLE [dbo].[User] ADD  CONSTRAINT [DF_User_StatusID]  DEFAULT ((1)) FOR [StatusId]
+GO
+ALTER TABLE [dbo].[UseType] ADD  CONSTRAINT [DF_UseType_StatusID]  DEFAULT ((1)) FOR [StatusID]
+GO
+ALTER TABLE [dbo].[UseType] ADD  CONSTRAINT [DF_UseType_DOE]  DEFAULT (getdate()) FOR [DOE]
+GO
+/****** Object:  StoredProcedure [dbo].[Proc_Manage_Users]    Script Date: 05-02-22 11:34:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[Proc_Manage_Users] (  
+ @QueryType nvarchar(30) = NULL,  
+ @UserId      int = NULL,  
+ @LoginId  nvarchar(30) = NULL,  
+ @UserType int = NULL,  
+ @FirstName nvarchar(50) = NULL,  
+ @MiddleName nvarchar(50) = NULL,  
+ @LastName nvarchar(50) = NULL,  
+ @DOB datetime = NULL,  
+ @MobileNo nvarchar(20) = NULL,  
+ @EmailId nvarchar(50) = NULL,  
+ @Password nvarchar(2000) = NULL,  
+ @CityId int = NULL ,  
+ @StateId int= NULL,  
+ @CountryId int = NULL,  
+ @Address nvarchar(MAX) = NULL,  
+ @PinCode nvarchar(50) = NULL,  
+ @ReferenceId varchar(200) = NULL, 
+ @AadharNumber nvarchar(50) = NULL  
+)  
+AS  
+  BEGIN  
+      IF(@QueryType = 'insert')  
+        BEGIN  
+  IF NOT EXISTS (SELECT u.MobileNo FROM [User] as u where u.MobileNo = @MobileNo)  
+   BEGIN  
+            INSERT INTO [User] (LoginId,UserType,FirstName,MiddleName,LastName,DOB,MobileNo,EmailId,[Password],CityId,StateId,CountryId,[Address],PinCode,AadharNumber,ReferenceId)   
+   values (@LoginId,@UserType,@FirstName,@MiddleName,@LastName,@DOB,@MobileNo,@EmailId,@Password,@CityId,@StateId,@CountryId,@Address,@PinCode,@AadharNumber,@ReferenceId)  
+   Select 'sucess' AS msg  
+   END  
+   ELSE  
+   BEGIN  
+   Select 'exist' AS msg  
+   END  
+        END  
+      ELSE IF(@QueryType = 'update')  
+        BEGIN  
+           UPDATE [User] SET FirstName=@FirstName,MiddleName=@MiddleName,LastName=@LastName,DOB=@DOB,MobileNo=@MobileNo,EmailId=@EmailId  
+     ,Password=@Password,CityId=@CityId,StateId=@StateId,CountryId=@CountryId,[Address]=@Address,PinCode=@PinCode,AadharNumber=@AadharNumber,ReferenceId=@ReferenceId WHERE  UserId = @UserId  
+        END  
+      ELSE IF(@QueryType = 'getall')  
+        BEGIN  
+            Select * From [User] where StatusId=1  
+        END  
+      ELSE IF(@QueryType = 'getbyid')  
+        BEGIN  
+           Select * From [User] where UserId=@UserId and StatusId=1  
+        END  
+   ELSE IF(@QueryType = 'delete')  
+        BEGIN  
+            DELETE FROM [User] where UserId=@UserId  
+        END  
+  END
+GO
+/****** Object:  StoredProcedure [dbo].[Proc_User_Authentication]    Script Date: 05-02-22 11:34:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Proc [dbo].[Proc_User_Authentication]
+@LoginId		 varchar(150)=null,
+@Password		 varchar(150)=null,
+@UserId  		 varchar(150)=null,
+@MobileOtp 		 varchar(150)=null,
+@MobileNo		 varchar(150)=null,
+@OldPassword	 varchar(150)=null,
+@AccountNumber	 varchar(40)=null,
+@IFSC			 varchar(40)=null,
+@Address		 varchar(Max)=null,
+@Address2		 varchar(max)=null,
+@Address3		 varchar(max)=null,
+@OrganizationName varchar(max)=null,
+@MobileNumber varchar(20)=null,
+@Email varchar(50)=null,
+@IsVerfied 		 bit=0,
+@QueryType       varchar(150)
+AS
+BEGIN
+	 IF(@QueryType = 'login')
+		BEGIN
+		Select * from [dbo].[User] Where [LoginId]=@LoginId AND [Password]=@Password AND StatusId=1
+	 END
+	 IF(@QueryType = 'getUser')
+		BEGIN
+		Select * from [dbo].[User] Where [UserId]=@LoginId 
+	 END
+	 IF(@QueryType = 'UpdateUserAddressInfo')
+		BEGIN
+		UPDATE [User] SET OrganizationName=@OrganizationName ,AccountNumber=@AccountNumber,IFSC=@IFSC,[Address]=@Address,Address2=@Address2,Address3=@Address3,
+		MobileNumber=@MobileNumber,Email=@Email Where [UserId]=@UserId 
+		Select 'Address info updated successfully.' As [status]
+	 END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[usp_CntactInfo]    Script Date: 05-02-22 11:34:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Proc [dbo].[usp_CntactInfo]
+@ContactId		 int=null,
+@Name   		 varchar(500)=null,
+@Address  		 varchar(max)=null,
+@MobileNumber 	 varchar(40)=null,
+@Message		 varchar(max)=null,
+@QueryType       varchar(150)
+AS
+BEGIN
+	 IF(@QueryType = 'get')
+		BEGIN
+		Select * from tblContact 
+	 END
+	  IF(@QueryType = 'insert')
+		BEGIN
+		 INSERT INTO [tblContact] ([Name],[Address],MobileNumber,[Message],CreatedDate)   
+		 values (@Name,@Address,@MobileNumber,@Message,GETDATE())  
+		 Select 'Message send successfully.' AS msg  
+	 END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[usp_EventMaster]    Script Date: 05-02-22 11:34:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Proc [dbo].[usp_EventMaster]
+@EventId		 int=null,
+@Title   		 varchar(max)=null,
+@Description  		 varchar(max)=null,
+@EventDate 	 varchar(50)=null,
+@IsActive		 bit=1,
+@ModifyDate varchar(50)=null,
+@EventDetailId int=null,
+@ImageName varchar(500)=null,
+@ImageUrl			varchar(max)=null,
+@VideoUrl			varchar(max)=null,
+@QueryType       varchar(150)
+AS
+BEGIN
+	 IF(@QueryType = 'get')
+	 BEGIN
+		Select EventId,Title,[Description],CONVERT(varchar,EventDate,3)AS EventDate,IsActive from tblEvent 
+	 END
+	 IF(@QueryType = 'getActiveEvents')
+	 BEGIN
+		Select EventId,Title,[Description],CONVERT(varchar,EventDate,3)AS EventDate from tblEvent where IsActive = 1
+		Select * from tblImage where IsActive = 1
+		Select * from tblVideo where IsActive = 1
+		Select Top(3) UpCommingEventId,Title,SubTitle,[Address],CONVERT(varchar,EventDate,3)AS EventDate,[Status] from tblUpComming where Status=1  order by UpCommingEventId desc
+	 END
+	 IF(@QueryType = 'getEventById')
+	 BEGIN
+		Select EventId,Title,[Description],CONVERT(varchar,EventDate,3)AS EventDate from tblEvent where IsActive = 1 AND EventId=@EventId order by EventId desc
+		Select * from tblImage where IsActive = 1 AND EventId=@EventId
+		Select * from tblVideo where IsActive = 1 AND EventId=@EventId
+		
+	 END
+	 IF(@QueryType = 'insert')
+	 BEGIN
+		 INSERT INTO [tblEvent] (Title,[Description],EventDate,IsActive,CreatedDate)   
+		 values (@Title,@Description,@EventDate,@IsActive,GETDATE())  
+		 Select 'success' AS 'msg' ,@@IDENTITY AS  'EventId'
+	 END
+	 IF(@QueryType = 'insertImage')
+	 BEGIN
+		 INSERT INTO [tblImage] (EventId,ImageName,ImageUrl,CreatedDate)   
+		 values (@EventId,@ImageName,@ImageUrl,GETDATE())  
+		 Select 'success' AS msg,  @@IDENTITY AS  'ImageId'
+	 END
+	  IF(@QueryType = 'insertVideo')
+	 BEGIN
+		 INSERT INTO [tblVideo] (EventId,VideoUrl,CreatedDate)   
+		 values (@EventId,@VideoUrl,GETDATE())  
+		 Select 'success' AS msg,  @@IDENTITY AS  'VideoId'
+	 END
+	 IF(@QueryType = 'updateEvent')
+	 BEGIN
+		 UPDATE tblEvent SET Title=@Title,[Description]=@Description,EventDate=@EventDate,IsActive=@IsActive WHERE EventId=@EventId
+		 UPDATE tblImage SET IsActive=@IsActive WHERE EventId=@EventId
+		 UPDATE tblVideo SET IsActive=@IsActive WHERE EventId=@EventId
+		 Select 'success' AS 'msg'
+	 END
+	 IF(@QueryType = 'delete')
+	 BEGIN
+		 Delete from tblEvent Where EventId=@EventId
+		 Delete from tblImage Where EventId=@EventId
+		 Delete from tblVideo Where EventId=@EventId
+	 END
+END
+GO
+/****** Object:  StoredProcedure [dbo].[usp_UpCommingEventMaster]    Script Date: 05-02-22 11:34:03 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE Proc [dbo].[usp_UpCommingEventMaster]
+@UpCommingEventId		 int=null,
+@Title   		 varchar(500)=null,
+@SubTitle   		 varchar(max)=null,
+@Address  		 varchar(1000)=null,
+@EventDate 	 varchar(50)=null,
+@Status		 bit=1,
+@QueryType       varchar(150)
+AS
+BEGIN
+	 IF(@QueryType = 'get')
+	 BEGIN
+		Select UpCommingEventId,Title,SubTitle,[Address],CONVERT(varchar,EventDate,3)AS EventDate,[Status] from tblUpComming 
+	 END
+	 IF(@QueryType = 'getIndex')
+	 BEGIN
+		Select Top(3) UpCommingEventId,Title,SubTitle,[Address],CONVERT(varchar,EventDate,3)AS EventDate,[Status] from tblUpComming order by UpCommingEventId desc
+	 END
+	 IF(@QueryType = 'insert')
+	 BEGIN
+		 INSERT INTO [tblUpComming] (Title,SubTitle,[Address],EventDate,CreatedDate,[Status])   
+		 values (@Title,@SubTitle,@Address,@EventDate,GETDATE(),@Status)  
+		 Select 'success' AS 'msg' ,@@IDENTITY AS  'EventId'
+	 END
+	 IF(@QueryType = 'updateEvent')
+	 BEGIN
+		 UPDATE tblUpComming SET Title=@Title,SubTitle=@SubTitle,[Address]=@Address,EventDate=@EventDate,Status=@Status WHERE UpCommingEventId=@UpCommingEventId
+		 Select 'success' AS 'msg'
+	 END
+	 IF(@QueryType = 'delete')
+	 BEGIN
+		 Delete from tblUpComming Where UpCommingEventId=@UpCommingEventId
+	 END
+END
+GO
+USE [master]
+GO
+ALTER DATABASE [ngo] SET  READ_WRITE 
+GO
